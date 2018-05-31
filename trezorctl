@@ -6,6 +6,7 @@
 # Copyright (C) 2012-2017 Pavol Rusnak <stick@satoshilabs.com>
 # Copyright (C) 2016-2017 Jochen Hoenicke <hoenicke@gmail.com>
 # Copyright (C) 2017      mruddy
+# Copyright (C) 2018      Archos S.A.
 #
 # This library is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
@@ -106,7 +107,7 @@ def print_result(res, path, verbose, is_json):
 #
 
 
-@cli.command(name='list', help='List connected TREZOR devices.')
+@cli.command(name='list', help='List connected devices.')
 def ls():
     return TrezorDevice.enumerate()
 
@@ -379,10 +380,10 @@ def firmware_update(connect, filename, url, version, skip_check, erase):
         fp = r.content
 
     if not skip_check and not erase:
-        if fp[:8] == b'54525a52' or fp[:8] == b'54525a56':
+        if fp[:8] == b'54525a52' or fp[:8] == b'54525a56' or fp[:8] == b'534146540a':
             fp = binascii.unhexlify(fp)
-        if fp[:4] != b'TRZR' and fp[:4] != b'TRZV':
-            raise CallException(proto.FailureType.FirmwareError, 'TREZOR firmware header expected')
+        if fp[:4] != b'TRZR' and fp[:4] != b'TRZV' and fp[:4] != b'SAFT':
+            raise CallException(proto.FailureType.FirmwareError, 'TREZOR/Safe-T firmware header expected')
 
     click.echo('Please confirm action on device...')
 

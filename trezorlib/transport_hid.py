@@ -2,6 +2,7 @@
 #
 # Copyright (C) 2012-2016 Marek Palatinus <slush@satoshilabs.com>
 # Copyright (C) 2012-2016 Pavol Rusnak <stick@satoshilabs.com>
+# Copyright (C) 2018      Archos S.A.
 #
 # This library is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
@@ -29,6 +30,12 @@ from .transport import Transport, TransportException
 DEV_TREZOR1 = (0x534c, 0x0001)
 DEV_TREZOR2 = (0x1209, 0x53c1)
 DEV_TREZOR2_BL = (0x1209, 0x53c0)
+
+DEV_SAFE_T_MINI_BOOTLOADER = (0x0e79, 0x6001)
+DEV_SAFE_T_MINI = (0x0e79, 0x6000)
+
+# Whether to support all devices based on the Trezor protocol, or just the Safe-T mini
+MULTIPLE_DEVICE_SUPPORT = False
 
 
 class HidHandle(object):
@@ -69,7 +76,7 @@ class HidTransport(Transport):
             # force_v1 = os.environ.get('TREZOR_TRANSPORT_V1', '0')
             force_v1 = True
 
-            if is_trezor2(device) and not int(force_v1):
+            if is_protocol_v2_supported(device) and not int(force_v1):
                 protocol = ProtocolV2()
             else:
                 protocol = ProtocolV1()
@@ -89,7 +96,7 @@ class HidTransport(Transport):
     def enumerate(debug=False):
         devices = []
         for dev in hid.enumerate(0, 0):
-            if not (is_trezor1(dev) or is_trezor2(dev) or is_trezor2_bl(dev)):
+            if not is_supported_device(dev):
                 continue
             if debug:
                 if not is_debuglink(dev):
@@ -182,6 +189,32 @@ def is_trezor2(dev):
 
 def is_trezor2_bl(dev):
     return (dev['vendor_id'], dev['product_id']) == DEV_TREZOR2_BL
+
+
+def is_safet_mini(dev):
+    return (dev['vendor_id'], dev['product_id']) == DEV_SAFE_T_MINI
+
+
+def is_safet_mini_bl(dev):
+    return (dev['vendor_id'], dev['product_id']) == DEV_SAFE_T_MINI_BOOTLOADER
+
+
+def is_protocol_v2_supported(dev):
+    if MULTIPLE_DEVICE_SUPPORT:
+        return is_trezor2(dev)
+    else:
+        return False
+
+
+def is_protocol_v1_supported(dev):
+    if MULTIPLE_DEVICE_SUPPORT:
+        return is_trezor1(dev) | is_trezor2_bl(dev) | is_safet_mini(dev) | is_safet_mini_bl(dev)
+    else:
+        return is_safet_mini(dev) | is_safet_mini_bl(dev)
+  
+
+def is_supported_device(dev):
+    return is_protocol_v1_supported(dev) | is_protocol_v2_supported(dev)
 
 
 def is_wirelink(dev):

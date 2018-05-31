@@ -3,6 +3,7 @@
 # Copyright (C) 2012-2016 Marek Palatinus <slush@satoshilabs.com>
 # Copyright (C) 2012-2016 Pavol Rusnak <stick@satoshilabs.com>
 # Copyright (C) 2016      Jochen Hoenicke <hoenicke@gmail.com>
+# Copyright (C) 2018      Archos S.A.
 #
 # This library is free software: you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
@@ -497,7 +498,7 @@ class DebugLinkMixin(object):
 
 class ProtocolMixin(object):
     PRIME_DERIVATION_FLAG = 0x80000000
-    VENDORS = ('bitcointrezor.com', 'trezor.io')
+    VENDORS = ('bitcointrezor.com', 'trezor.io', 'safe-t.io')
 
     def __init__(self, *args, **kwargs):
         super(ProtocolMixin, self).__init__(*args, **kwargs)
