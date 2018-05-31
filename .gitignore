@@ -3,8 +3,8 @@
 MANIFEST
 build/
 dist/
-python_trezor.egg-info/
-trezor.egg-info/
+python_safet.egg-info/
+safet.egg-info/
 *.pyc
 *.bin
 *.py.cache

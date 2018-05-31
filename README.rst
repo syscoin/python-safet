@@ -1,15 +1,11 @@
-python-trezor
-=============
+python-safet
+============
 
-.. image:: https://travis-ci.org/trezor/python-trezor.svg?branch=master
-    :target: https://travis-ci.org/trezor/python-trezor
+Python library and commandline client for communicating with the Archos Safe-T mini Hardware Wallet
 
-.. image:: https://badges.gitter.im/trezor/community.svg
-    :target: https://gitter.im/trezor/community
+This library is a mofified version of `python-trezor <https://github.com/trezor/python-trezor>`_.
 
-Python library and commandline client for communicating with TREZOR Hardware Wallet
-
-See https://trezor.io for more information
+See https://safe-t.io for more information
 
 Install
 -------
@@ -20,47 +16,31 @@ Linux requirements:
 
   sudo apt-get install python3-dev cython3 libusb-1.0-0-dev libudev-dev git
 
-Linux & Mac Python requirements:
+Linux Python requirements:
 
 .. code::
 
   sudo -H pip3 install setuptools
   sudo -H pip3 install -r requirements.txt
-  sudo -H pip3 install trezor
-
-On FreeBSD you can install the packages:
-
-.. code::
-
-  pkg install security/py-trezor
-
-or build via ports:
-
-.. code::
-
-  cd /usr/ports/security/py-trezor
-  make install clean
 
 
 Commandline client (trezorctl)
 ---------------------------
 
-The included ``trezorctl`` python script can perform various tasks such as changing setting in the Trezor, signing transactions, retrieving account info and addresses. See the `docs/ <docs/>`_ sub folder for detailed examples and options.
-
-NOTE: An older version of the ``trezorctl`` command is `available for Debian Stretch <https://packages.debian.org/en/stretch/python-trezor>`_ (and comes pre-installed on `Tails OS <https://tails.boum.org/>`_).
+The included ``trezorctl`` python script can perform various tasks such as changing setting in the device, signing transactions, retrieving account info and addresses. See the `docs/ <docs/>`_ sub folder for detailed examples and options.
 
 
 Python Library
 --------------
 
-You can use this python library to interact with a Bitcoin Trezor and use its capabilities in your application.
+You can use this python library to interact with the Safe-T mini and use its capabilities in your application.
 See examples here in the `tools/ <tools/>`_ sub folder.
 
 
 PIN Entering
 ------------
 
-When you are asked for PIN, you have to enter scrambled PIN. Follow the numbers shown on TREZOR display and enter the their positions using the numeric keyboard mapping:
+When you are asked for PIN, you have to enter scrambled PIN. Follow the numbers shown on the device's display and enter the their positions using the numeric keyboard mapping:
 
 === === ===
  7   8   9
@@ -68,7 +48,7 @@ When you are asked for PIN, you have to enter scrambled PIN. Follow the numbers 
  1   2   3
 === === ===
 
-Example: your PIN is **1234** and TREZOR is displaying the following:
+Example: your PIN is **1234** and the device is displaying the following:
 
 === === ===
  2   8   3

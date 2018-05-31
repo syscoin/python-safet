@@ -25,12 +25,12 @@ else:
 from trezorlib import __version__ as VERSION
 
 setup(
-    name='trezor',
+    name='safet',
     version=VERSION,
-    author='TREZOR',
-    author_email='info@trezor.io',
-    description='Python library for communicating with TREZOR Hardware Wallet',
-    url='https://github.com/trezor/python-trezor',
+    author='Trezor - Archos',
+    author_email='software@archos.com',
+    description='Python library for communicating with the Archos Safe-T mini (Trezor compatible) Hardware Wallets',
+    url='https://github.com/archos-safe-t/python-safet',
     packages=[
         'trezorlib',
         'trezorlib.messages',
