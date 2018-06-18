@@ -24,10 +24,10 @@ Linux Python requirements:
   sudo -H pip3 install -r requirements.txt
 
 
-Commandline client (trezorctl)
+Commandline client (safetctl)
 ---------------------------
 
-The included ``trezorctl`` python script can perform various tasks such as changing setting in the device, signing transactions, retrieving account info and addresses. See the `docs/ <docs/>`_ sub folder for detailed examples and options.
+The included ``safetctl`` python script can perform various tasks such as changing setting in the device, signing transactions, retrieving account info and addresses. See the `docs/ <docs/>`_ sub folder for detailed examples and options.
 
 
 Python Library
