@@ -237,10 +237,11 @@ def set_u2f_counter(connect, counter):
     return connect().set_u2f_counter(counter)
 
 
-@cli.command(help='Reset device to factory defaults and remove all private data.')
+@cli.command(help='Reset device to factory defaults and remove all private data. Use force option to wipe even if PIN protection is on.')
+@click.option('-f', '--force', is_flag=True)
 @click.pass_obj
-def wipe_device(connect):
-    return connect().wipe_device()
+def wipe_device(connect, force):
+    return connect().wipe_device(force)
 
 
 @cli.command(help='Load custom configuration to the device.')

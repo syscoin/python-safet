@@ -4,4 +4,7 @@ from .. import protobuf as p
 
 
 class WipeDevice(p.MessageType):
+    FIELDS = {
+        1: ('force', p.BoolType, 0),
+    }
     MESSAGE_WIRE_TYPE = 5

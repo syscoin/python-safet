@@ -1027,8 +1027,8 @@ class ProtocolMixin(object):
 
     @field('message')
     @expect(proto.Success)
-    def wipe_device(self):
-        ret = self.call(proto.WipeDevice())
+    def wipe_device(self, force=False):
+        ret = self.call(proto.WipeDevice(force=force))
         self.init_device()
         return ret
 
