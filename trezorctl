@@ -360,22 +360,15 @@ def firmware_update(connect, filename, url, version, skip_check, erase):
         fp = 32768 * b'\xFF'
     else:
         import requests
-        r = requests.get('https://wallet.trezor.io/data/firmware/releases.json')
-        releases = r.json()
+        if not version:
+            r = requests.get('https://storage.googleapis.com/safe-t-software/safe-t-mini/latest_version.txt')
+            version = r.text.rstrip()
 
-        def version_func(r):
-            return r['version']
-
-        def version_string(r):
-            return '.'.join(map(str, version_func(r)))
-
-        if version:
-            release = next((r for r in releases if version_string(r) == version))
-        else:
-            release = max(releases, key=version_func)
-            click.echo('Fetching version: %s' % version_string(release))
-        click.echo('Firmware fingerprint: %s' % release['fingerprint'])
-        url = 'https://wallet.trezor.io/' + release['url']
+        click.echo('Fetching version: %s' % version)
+        r = requests.get('https://storage.googleapis.com/safe-t-software/safe-t-mini/firmware/' + version + '/fingerprint.txt')
+        fingerprint = r.text.rstrip()
+        click.echo('Firmware fingerprint: %s' % fingerprint)
+        url = 'https://storage.googleapis.com/safe-t-software/safe-t-mini/firmware/' + version + '/safe-t-mini.bin'
         click.echo('Downloading from %s' % url)
         r = requests.get(url)
         fp = r.content
