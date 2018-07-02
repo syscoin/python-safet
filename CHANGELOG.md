@@ -1,5 +1,7 @@
 The changelog format is bound to change as we figure out a way to autogenerate it.
 
+## version 0.1.2 (same as 0.1.1)
+
 ## version 0.1.1
 
 - Fix automatic firmware update
