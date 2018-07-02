@@ -111,7 +111,7 @@ class HidTransport(Transport):
     def find_by_path(cls, path):
         if isinstance(path, str):
             path = path.encode()
-        path = path.replace(b'%s:' % cls.PATH_PREFIX.encode(), b'')
+        path = path.replace(cls.PATH_PREFIX.encode() + b':', b'')
 
         for transport in HidTransport.enumerate():
             if path is None or transport.device['path'] == path:
