@@ -14,7 +14,6 @@ install_requires = [
     'requests>=2.4.0',
     'click>=6.2',
     'pyblake2>=0.9.3',
-    'rlp>=0.6.0',
 ]
 
 import sys
@@ -102,6 +101,11 @@ setup(
     ],
     scripts=['safetctl'],
     install_requires=install_requires,
+    extras_require={
+        'ethereum': [
+            'rlp>=0.6.0',
+        ],
+    },
     python_requires='>=3.3',
     include_package_data=True,
     zip_safe=False,
