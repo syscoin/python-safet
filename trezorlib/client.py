@@ -911,7 +911,7 @@ class ProtocolMixin(object):
         return txes
 
     @session
-    def sign_tx(self, coin_name, inputs, outputs, version=None, lock_time=None, debug_processor=None):
+    def sign_tx(self, coin_name, inputs, outputs, preblockHash=None, version=None, lock_time=None, debug_processor=None):
 
         start = time.time()
         txes = self._prepare_sign_tx(coin_name, inputs, outputs)
@@ -925,6 +925,8 @@ class ProtocolMixin(object):
             tx.version = version
         if lock_time is not None:
             tx.lock_time = lock_time
+        if preblockHash is not None:
+            tx.preblock_hash = preblockHash
         res = self.call(tx)
 
         # Prepare structure for signatures
@@ -964,6 +966,7 @@ class ProtocolMixin(object):
             if res.request_type == proto.RequestType.TXMETA:
                 msg = proto.TransactionType()
                 msg.version = current_tx.version
+                msg.preblock_hash = current_tx.preblock_hash
                 msg.lock_time = current_tx.lock_time
                 msg.inputs_cnt = len(current_tx.inputs)
                 if res.details.tx_hash:

@@ -11,5 +11,6 @@ class SignTx(p.MessageType):
         4: ('version', p.UVarintType, 0),  # default=1
         5: ('lock_time', p.UVarintType, 0),  # default=0
         6: ('decred_expiry', p.UVarintType, 0),
+        7: ('preblock_hash', p.BytesType, 0), #default=0
     }
     MESSAGE_WIRE_TYPE = 15

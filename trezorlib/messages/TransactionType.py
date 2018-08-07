@@ -18,4 +18,5 @@ class TransactionType(p.MessageType):
         8: ('extra_data', p.BytesType, 0),
         9: ('extra_data_len', p.UVarintType, 0),
         10: ('decred_expiry', p.UVarintType, 0),
+        11: ('preblock_hash', p.BytesType, 0),
     }
