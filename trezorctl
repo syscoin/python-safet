@@ -188,6 +188,12 @@ def disable_passphrase(connect):
 def set_label(connect, label):
     return connect().apply_settings(label=label)
 
+@cli.command(help='Set device language.')
+@click.option('-L', '--language')
+@click.pass_obj
+def set_language(connect, language):
+    return connect().apply_settings(language=language)
+
 
 @cli.command(help='Set device flags.')
 @click.argument('flags')
@@ -314,6 +320,7 @@ def recovery_device(connect, words, expand, pin_protection, passphrase_protectio
 @click.option('-r', '--passphrase-protection', is_flag=True)
 @click.option('-p', '--pin-protection', is_flag=True)
 @click.option('-l', '--label')
+@click.option('-L', '--language', default='english')
 @click.option('-u', '--u2f-counter', default=0)
 @click.option('-s', '--skip-backup', is_flag=True)
 @click.pass_obj
@@ -324,7 +331,7 @@ def reset_device(connect, entropy, strength, passphrase_protection, pin_protecti
         passphrase_protection,
         pin_protection,
         label,
-        'english',
+        language,
         u2f_counter,
         skip_backup
     )
