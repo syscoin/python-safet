@@ -1,4 +1,6 @@
 The changelog format is bound to change as we figure out a way to autogenerate it.
+## version 0.1.4
+Add preblock_hash in transaction message for BCD support
 
 ## version 0.1.3
 
