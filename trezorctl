@@ -324,7 +324,7 @@ def recovery_device(connect, words, expand, pin_protection, passphrase_protectio
 @click.option('-u', '--u2f-counter', default=0)
 @click.option('-s', '--skip-backup', is_flag=True)
 @click.pass_obj
-def reset_device(connect, entropy, strength, passphrase_protection, pin_protection, label, u2f_counter, skip_backup):
+def reset_device(connect, entropy, strength, passphrase_protection, pin_protection, label, language, u2f_counter, skip_backup):
     return connect().reset_device(
         entropy,
         int(strength),
