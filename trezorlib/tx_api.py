@@ -197,3 +197,4 @@ TxApiSegnet = TxApiSmartbit(network='smartbit_segnet', url='https://segnet-api.s
 TxApiMonacoin = TxApiInsight(network='insight_monacoin', url='https://mona.insight.monaco-ex.org/insight-api-monacoin/')
 TxApiGroestlcoin = TxApiInsight(network='insight_groestlcoin', url='https://groestlsight.groestlcoin.org/api/')
 TxApiBitcore = TxApiInsight(network='insight_bitcore', url='https://insight.bitcore.cc/api/')
+TxApiSyscoin = TxApiInsight(network='insight_syscoin', url='http://chainz.cryptoid.info/sys/api.dws')
