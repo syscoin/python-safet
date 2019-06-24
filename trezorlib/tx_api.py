@@ -117,6 +117,7 @@ class TxApiInsight(TxApi):
 
 class TxApiSmartbit(TxApi):
 
+
     def get_tx(self, txhash):
 
         data = self.fetch_json('tx', txhash)
@@ -153,7 +154,6 @@ class TxApiBlockCypher(TxApi):
 
     def __init__(self, network, url, zcash=None):
         super(TxApiBlockCypher, self).__init__(network, url)
-        self.pushtx_url = url.replace('//api.', '//live.').replace('/v1/', '/').replace('/main/', '/pushtx/')
 
     def get_tx(self, txhash):
 
@@ -184,6 +184,43 @@ class TxApiBlockCypher(TxApi):
         return t
 
 
+class TxApiBCFSyscoin(TxApi):
+
+    def __init__(self, network, url, zcash=None):
+        super(TxApiBCFSyscoin, self).__init__(network, url)
+        self.pushtx_url = '%s%s?hex=' % (self.url, 'sendrawtransaction')
+
+    def get_url(self, resource, resourceid):
+        if resource is 'getrawtransaction':
+            url = '%s%s?txid=%s' % (self.url, resource, resourceid)
+        else:
+            url = '%s%s/%s' % (self.url, resource, resourceid)
+        return url
+
+    def get_tx(self, txhash):
+
+        data = self.fetch_json('getrawtransaction', txhash)
+
+        t = proto.TransactionType()
+        t.version = data['version']
+        t.lock_time = data.get('locktime', 0)
+
+        for vin in data['vin']:
+            i = t._add_inputs()
+            i.prev_hash = b"\0" * 32
+            i.prev_index = 0xffffffff  # signed int -1
+            i.script_sig = binascii.unhexlify(vin['scriptSig']['hex'])
+            i.sequence = vin['sequence']
+            i.prev_index = vin['vout']
+
+        for vout in data['vout']:
+            o = t._add_bin_outputs()
+            o.amount = int(str(vout['value']), 10)
+            o.script_pubkey = binascii.unhexlify(vout['scriptPubKey']['hex'])
+
+        return t
+
+
 TxApiBitcoin = TxApiInsight(network='insight_bitcoin', url='https://btc-bitcore1.trezor.io/api/')
 TxApiTestnet = TxApiInsight(network='insight_testnet', url='https://testnet-bitcore3.trezor.io/api/')
 TxApiLitecoin = TxApiInsight(network='insight_litecoin', url='https://ltc-bitcore1.trezor.io/api/')
@@ -197,4 +234,4 @@ TxApiSegnet = TxApiSmartbit(network='smartbit_segnet', url='https://segnet-api.s
 TxApiMonacoin = TxApiInsight(network='insight_monacoin', url='https://mona.insight.monaco-ex.org/insight-api-monacoin/')
 TxApiGroestlcoin = TxApiInsight(network='insight_groestlcoin', url='https://groestlsight.groestlcoin.org/api/')
 TxApiBitcore = TxApiInsight(network='insight_bitcore', url='https://insight.bitcore.cc/api/')
-TxApiSyscoin = TxApiInsight(network='insight_syscoin', url='http://chainz.cryptoid.info/sys/api.dws')
+TxApiSyscoin = TxApiBCFSyscoin(network='bcf_syscoin', url='http://explorer.blockchainfoundry.co/api/')
